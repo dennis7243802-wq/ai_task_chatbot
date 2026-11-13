@@ -47,12 +47,11 @@ def generate_with_key_rotation(
     'gemini-3.5-flash'. If that model fails, falls back to 'gemini-3.8-flash'.
     If all attempts fail, raises an exception.
     """
-api_keys = get_available_api_keys()
+    api_keys = get_available_api_keys()
     if not api_keys:
         raise ValueError("No Gemini API keys found in Streamlit secrets!")
 
     models_to_try = ["gemini-3.5-flash", "gemini-3.8-flash"]
-    
     last_exception = None
 
     for key_idx, api_key in enumerate(api_keys, start=1):
@@ -66,16 +65,13 @@ api_keys = get_available_api_keys()
                         contents=contents,
                         config=config,
                     )
-                    # Optional: Display a subtle info toast or log successful routing if needed
                     return response.text
                 except Exception as model_err:
                     last_exception = model_err
-                    # Model failed with current key, try next model or next key
                     continue
                     
         except Exception as key_err:
             last_exception = key_err
-            # Current key failed entirely, move to next key in rotation
             continue
 
     raise RuntimeError(
