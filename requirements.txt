@@ -1,0 +1,4 @@
+streamlit>=1.38.0
+supabase>=2.7.0
+google-genai>=0.3.0
+pydantic>=2.8.0
